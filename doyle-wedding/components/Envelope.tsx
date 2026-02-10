@@ -9,7 +9,7 @@ const scriptFont = Pinyon_Script({ weight: '400', subsets: ['latin'] })
 const serifFont = Cinzel({ weight: ['400', '600'], subsets: ['latin'] })
 
 interface EnvelopeProps {
-  onOpen: () => void;
+  onOpen?: () => void;
 }
 
 export default function Envelope({ onOpen }: EnvelopeProps) {
@@ -20,11 +20,15 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
     if (isOpen) return
     setIsOpen(true)
     
-    // Flip z-index halfway so letter can move over flap
-    setTimeout(() => setZIndexFlow(true), 300)
+    // 1. Flip Z-Index halfway through opening so letter sits ON TOP of the flap
+    setTimeout(() => {
+        setZIndexFlow(true)
+    }, 300)
 
-    // Call onOpen after letter has been visible a moment
-    setTimeout(() => onOpen(), 2500)
+    // 2. Trigger the page transition
+    setTimeout(() => {
+      if (onOpen) onOpen()
+    }, 2500)
   }
 
   return (
@@ -44,26 +48,36 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
            </span>
         </div>
 
-        {/* --- LAYER 1: BACK OF ENVELOPE (Dark Interior) --- */}
+        {/* --- LAYER 1: BACK OF ENVELOPE --- */}
         <div className="absolute inset-0 bg-[#3D0A12] rounded-sm shadow-2xl" />
 
         {/* --- LAYER 2: THE LETTER --- */}
+        {/* Fixed: Used translate-x-1/2 for perfect geometric centering */}
         <motion.div 
-          className="absolute inset-x-2 bottom-0 bg-[#F2E8DE] shadow-md flex flex-col items-center justify-start pt-8 text-[#781727] origin-bottom"
-          initial={{ height: '90%', y: 0 }}
-          animate={isOpen ? { y: -150, height: '110%' } : { y: 0, height: '90%' }}
+          className="absolute left-1/2 bottom-0 w-[90%] bg-[#F2E8DE] shadow-md flex flex-col items-center justify-start pt-6 text-[#781727] origin-bottom"
+          initial={{ height: '90%', x: "-50%", y: 0 }}
+          animate={isOpen ? { y: -180, height: '120%' } : { y: 0, height: '90%' }}
           transition={{ 
-            y: { delay: 0.4, duration: 1.2, ease: 'easeInOut' },
+            y: { delay: 0.4, duration: 1.2, ease: "easeInOut" },
             height: { delay: 0.4, duration: 1.2 }
           }}
           style={{ zIndex: 10 }}
         >
+          {/* Paper Texture */}
           <div className="absolute inset-0 opacity-10 bg-black/5" />
+          
+          {/* Letter Content */}
           <div className="relative z-10 flex flex-col items-center w-full px-4 text-center">
-            <h1 className={`${scriptFont.className} text-3xl md:text-5xl mb-2`}>J & A</h1>
-            <div className="h-px w-12 bg-[#781727]/30 mb-2" />
-            <p className={`${serifFont.className} text-[9px] md:text-[10px] tracking-[0.2em] uppercase`}>Request the honor of your presence</p>
-            <p className={`${serifFont.className} text-[9px] md:text-[10px] mt-4 font-bold`}>OCTOBER 10, 2026</p>
+            <h1 className={`${scriptFont.className} text-3xl md:text-5xl mb-2`}>
+                J & A
+            </h1>
+            <div className="h-px w-12 bg-[#781727]/30 mb-2"></div>
+            <p className={`${serifFont.className} text-[9px] md:text-[10px] tracking-[0.2em] uppercase`}>
+                You are invited
+            </p>
+            <p className={`${serifFont.className} text-[9px] md:text-[10px] mt-4 font-bold`}>
+                OCTOBER 10, 2026
+            </p>
           </div>
         </motion.div>
 
@@ -83,12 +97,21 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
             className="absolute inset-x-0 top-0 h-1/2 origin-top"
             initial={{ rotateX: 0 }}
             animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-            style={{ zIndex: zIndexFlow ? 5 : 30, transformStyle: 'preserve-3d' }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            style={{ 
+                zIndex: zIndexFlow ? 5 : 30, // Flap goes behind letter after opening
+                transformStyle: 'preserve-3d' 
+            }}
         >
-             <svg className="w-full h-full overflow-visible drop-shadow-lg" viewBox="0 0 500 156" preserveAspectRatio="none">
+             <svg 
+                className="w-full h-full overflow-visible drop-shadow-lg"
+                viewBox="0 0 500 156" 
+                preserveAspectRatio="none"
+             >
                 <path d="M0,0 L250,156 L500,0 Z" fill="#8E1C2E" />
              </svg>
+             
+             {/* Wax Seal */}
              <motion.div 
                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
                className="absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#B59453] rounded-full flex items-center justify-center shadow-md border-2 border-[#94763E]"

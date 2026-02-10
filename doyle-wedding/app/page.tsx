@@ -1,57 +1,108 @@
 "use client"
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Pinyon_Script, Cinzel } from 'next/font/google'
 import Envelope from '@/components/Envelope'
-import { useState } from 'react'
 
 const scriptFont = Pinyon_Script({ weight: '400', subsets: ['latin'] })
 const serifFont = Cinzel({ weight: ['400', '600'], subsets: ['latin'] })
 
 export default function Home() {
-  const [openComplete, setOpenComplete] = useState(false)
+  const [view, setView] = useState<'envelope' | 'content'>('envelope')
+
   return (
-    <div className="w-full bg-[#781727] text-[#EFD4C4]">
-      
-      {/* 1. THE OPENING EXPERIENCE */}
-      <section className="h-screen w-full flex items-center justify-center bg-[#5E121E]">
-        <Envelope onOpenComplete={() => setOpenComplete(true)} />
-      </section>
+    <main className="min-h-screen w-full bg-[#781727] text-[#EFD4C4] overflow-x-hidden">
+      <AnimatePresence mode='wait'>
+        {view === 'envelope' && (
+          <motion.section 
+            key="envelope-view"
+            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+            transition={{ duration: 1.0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#5E121E]"
+          >
+             {/* This connects the envelope to the main site */}
+             <Envelope onOpen={() => setView('content')} />
+          </motion.section>
+        )}
 
-      {/* 2. THE MAIN WEBSITE (Appears below) */}
-  <main className={`min-h-screen flex flex-col items-center justify-center p-4 relative border-t-4 border-[#EFD4C4] transition-opacity duration-700 ${openComplete ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        
-        {/* FISH ICON */}
-        <div className="mb-8 opacity-90 mt-20">
-          <svg width="100" height="50" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path d="M180 50C180 50 140 10 100 10C60 10 20 50 20 50C20 50 60 90 100 90C140 90 180 50 180 50Z" stroke="#EFD4C4" strokeWidth="2" strokeLinecap="round" opacity="0.25"/>
-             <path d="M160 50C160 30 130 20 100 20C50 20 20 50 20 50C20 50 50 80 100 80C130 80 160 70 160 50" stroke="#EFD4C4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-             <path d="M160 50L190 20" stroke="#EFD4C4" strokeWidth="3" strokeLinecap="round"/>
-             <path d="M160 50L190 80" stroke="#EFD4C4" strokeWidth="3" strokeLinecap="round"/>
-          </svg>
-        </div>
+        {view === 'content' && (
+          <motion.div
+            key="content-view"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="w-full min-h-screen flex flex-col items-center"
+          >
+             {/* Top Border Decoration */}
+             <div className="w-full h-4 bg-[#EFD4C4]/10 border-b border-[#EFD4C4]/20 mb-12" />
 
-        {/* REST OF CONTENT (Names, Links, Photos) */}
-        <h1 className={`${scriptFont.className} text-8xl md:text-9xl mb-6 text-center leading-tight`}>
-          Juanita <span className="opacity-70 text-6xl">&</span> Alexander
-        </h1>
-        
-        <div className={`${serifFont.className} text-center mb-20`}>
-           <p className="uppercase tracking-[0.25em] border-b border-[#EFD4C4]/30 pb-4 mb-8">
-              October 10, 2026 • NYC
-           </p>
-           
-           <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
-              {/* Photo Card 1 */}
-              <div className="w-64 h-80 bg-[#EFD4C4]/10 border border-[#EFD4C4]/20 -rotate-3 p-4">
-                 <div className="w-full h-full bg-[#5E121E]/50 flex items-center justify-center">Photo 1</div>
-              </div>
-              {/* Photo Card 2 */}
-              <div className="w-64 h-80 bg-[#EFD4C4]/10 border border-[#EFD4C4]/20 rotate-3 p-4">
-                 <div className="w-full h-full bg-[#5E121E]/50 flex items-center justify-center">Photo 2</div>
-              </div>
-           </div>
-        </div>
+             {/* Header Content */}
+             <div className="flex flex-col items-center justify-center p-4 max-w-4xl w-full">
+                
+                {/* Logo Icon */}
+                <div className="mb-6 opacity-80">
+                   <div className="w-16 h-16 border-2 border-[#EFD4C4] rotate-45 flex items-center justify-center">
+                      <div className="w-12 h-12 border border-[#EFD4C4] flex items-center justify-center -rotate-45">
+                          <span className={`${scriptFont.className} text-xl`}>JA</span>
+                      </div>
+                   </div>
+                </div>
 
-      </main>
-    </div>
+                {/* Names */}
+                <h1 className={`${scriptFont.className} text-7xl md:text-9xl mb-4 text-center leading-none drop-shadow-lg`}>
+                    Juanita <span className="text-5xl opacity-70 block md:inline my-2">&</span> Alexander
+                </h1>
+
+                {/* Date & Location */}
+                <div className={`${serifFont.className} text-center mb-16 w-full`}>
+                    <p className="uppercase tracking-[0.25em] text-xs md:text-sm border-b border-[#EFD4C4]/30 pb-6 mb-8 mx-auto max-w-[300px]">
+                        October 10, 2026 • New York City
+                    </p>
+                    
+                    <div className="flex flex-col md:flex-row gap-12 items-center justify-center mt-12 mb-16 relative">
+                        
+                        <motion.div 
+                            initial={{ rotate: -6, opacity: 0, y: 20 }}
+                            animate={{ rotate: -3, opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            className="w-72 bg-white p-4 pb-12 shadow-2xl transform hover:scale-105 hover:rotate-0 transition-all duration-500 text-center"
+                        >
+                            <div className="w-full aspect-3/4 bg-gray-200 overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
+                                <img src="https://placehold.co/600x800/png?text=Juanita" alt="Juanita" className="w-full h-full object-cover opacity-80" />
+                            </div>
+                            <p className="mt-4 text-gray-800 font-handwriting text-sm tracking-widest uppercase">The Bride</p>
+                        </motion.div>
+
+                        <motion.div 
+                            initial={{ rotate: 6, opacity: 0, y: 20 }}
+                            animate={{ rotate: 3, opacity: 1, y: 0 }}
+                            transition={{ delay: 0.7, duration: 0.8 }}
+                            className="w-72 bg-white p-4 pb-12 shadow-2xl transform hover:scale-105 hover:rotate-0 transition-all duration-500 text-center"
+                        >
+                            <div className="w-full aspect-3/4 bg-gray-200 overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
+                                <img src="https://placehold.co/600x800/png?text=Alexander" alt="Alexander" className="w-full h-full object-cover opacity-80" />
+                            </div>
+                            <p className="mt-4 text-gray-800 font-handwriting text-sm tracking-widest uppercase">The Groom</p>
+                        </motion.div>
+                        
+                    </div>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex gap-6 uppercase tracking-widest text-xs md:text-sm mb-20">
+                    <button className="px-8 py-4 border border-[#EFD4C4] hover:bg-[#EFD4C4] hover:text-[#781727] transition-all duration-300">
+                        RSVP Now
+                    </button>
+                    <button className="px-8 py-4 border border-[#EFD4C4] hover:bg-[#EFD4C4] hover:text-[#781727] transition-all duration-300">
+                        Guest Details
+                    </button>
+                </div>
+
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   )
 }
