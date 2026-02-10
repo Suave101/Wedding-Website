@@ -1,5 +1,4 @@
 "use client"
-"use client"
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Pinyon_Script, Cinzel } from 'next/font/google'
@@ -20,7 +19,7 @@ export default function Home() {
             key="envelope-view"
             exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
             transition={{ duration: 1.0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#5E121E]"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#5E121E] h-dvh w-full perspective-1000"
           >
              <Envelope onOpen={() => setView('content')} />
           </motion.section>

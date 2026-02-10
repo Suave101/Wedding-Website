@@ -18,20 +18,14 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
   const handleOpen = () => {
     if (isOpen) return
     setIsOpen(true)
-    
-    // Task 2: Flip Z-Index halfway through animation
-    setTimeout(() => {
-        setZIndexFlow(true)
-    }, 300)
-
-    // Task 3: Safety check for onOpen
+    setTimeout(() => setZIndexFlow(true), 300)
     setTimeout(() => {
       if (onOpen) onOpen()
     }, 2000)
   }
 
+  // NOTE: component no longer centers itself; parent should position it.
   return (
-    <div className="flex items-center justify-center w-full h-full perspective-1000">
       <motion.div 
         className="relative w-[min(90vw,500px)] aspect-[1.6/1] cursor-pointer"
         onClick={handleOpen}
@@ -39,15 +33,17 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
+        {/* Hint Text */}
         <div className={`absolute -top-16 left-0 right-0 text-center transition-all duration-500 ${isOpen ? 'opacity-0' : 'opacity-70 animate-pulse'}`}>
            <span className={`${serifFont.className} text-[#EFD4C4] tracking-[0.3em] text-xs md:text-sm`}>
              TAP TO OPEN
            </span>
         </div>
 
+        {/* Envelope Back */}
         <div className="absolute inset-0 bg-[#3D0A12] rounded-sm shadow-2xl" />
 
-        {/* Task 1: Fix Centering using x: "-50%" */}
+        {/* Letter Card */}
         <motion.div 
           className="absolute left-1/2 bottom-0 w-[90%] bg-[#F2E8DE] shadow-md flex flex-col items-center justify-start pt-6 text-[#781727] origin-bottom"
           initial={{ height: '90%', x: "-50%", y: 0 }}
@@ -67,18 +63,20 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
           </div>
         </motion.div>
 
+        {/* Pocket SVG */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-2xl" viewBox="0 0 500 312" preserveAspectRatio="none" style={{ zIndex: 20 }}>
             <path d="M0,312 L0,0 L250,180 L500,0 L500,312 Z" fill="#781727" />
             <path d="M0,0 L250,180 L500,0" fill="none" stroke="#8E1C2E" strokeWidth="2" />
         </svg>
 
+        {/* Flap SVG */}
         <motion.div
             className="absolute inset-x-0 top-0 h-1/2 origin-top"
             initial={{ rotateX: 0 }}
             animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
             style={{ 
-                zIndex: zIndexFlow ? 5 : 30, // Task 2: Apply Z-Index Logic
+                zIndex: zIndexFlow ? 5 : 30, 
                 transformStyle: 'preserve-3d' 
             }}
         >
@@ -92,7 +90,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
                  <span className={`${scriptFont.className} text-[#3D0A12] text-lg`}>JA</span>
              </motion.div>
         </motion.div>
+
       </motion.div>
-    </div>
   )
 }
