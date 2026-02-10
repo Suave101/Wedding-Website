@@ -1,0 +1,5 @@
+Dark Scarlet	#4E0714
+Antique Ruby	#781727
+Deep Puce	#AC5B67
+Pink Pearl	#E2B3C2
+Almond	#EFD4C4
