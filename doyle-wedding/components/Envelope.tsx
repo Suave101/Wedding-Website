@@ -59,7 +59,8 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
             <h1 className={`${scriptFont.className} text-3xl md:text-5xl mb-2`}>J & A</h1>
             <div className="h-px w-12 bg-[#781727]/30 mb-2"></div>
             <p className={`${serifFont.className} text-[9px] md:text-[10px] tracking-[0.2em] uppercase`}>Request the honor of your presence</p>
-            <p className={`${serifFont.className} text-[9px] md:text-[10px] mt-4 font-bold`}>OCTOBER 10, 2026</p>
+            {/* DATE EDITED HERE */}
+            <p className={`${serifFont.className} text-[9px] md:text-[10px] mt-4 font-bold`}>JUNE 6, 2026</p>
           </div>
         </motion.div>
 
