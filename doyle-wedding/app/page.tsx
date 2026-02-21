@@ -224,7 +224,7 @@ export default function Home() {
 
                             {/* Time */}
                             <p className={`${serifFont.className} text-lg md:text-2xl tracking-[0.2em] text-[#EFD4C4]`}>
-                                AT FOUR O'CLOCK IN THE AFTERNOON
+                                AT TWO O'CLOCK IN THE AFTERNOON
                             </p>
 
                             {/* Location */}
@@ -250,6 +250,12 @@ export default function Home() {
                                 className={`${serifFont.className} px-12 py-5 border border-[#EFD4C4] text-[#EFD4C4] text-lg md:text-xl tracking-[0.25em] hover:bg-[#EFD4C4] hover:text-[#781727] transition-all duration-300 uppercase`}
                             >
                                 R.S.V.P.
+                            </a>
+                            <a 
+                                href="/registry"
+                                className={`${serifFont.className} px-12 py-5 border border-[#EFD4C4] text-[#EFD4C4] text-lg md:text-xl tracking-[0.25em] hover:bg-[#EFD4C4] hover:text-[#781727] transition-all duration-300 uppercase`}
+                            >
+                                Registry
                             </a>
                         </motion.div>
                         
