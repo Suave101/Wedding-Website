@@ -224,7 +224,7 @@ export default function Home() {
 
                             {/* Time */}
                             <p className={`${serifFont.className} text-lg md:text-2xl tracking-[0.2em] text-[#EFD4C4]`}>
-                                AT TWO O'CLOCK IN THE AFTERNOON
+                                AT TWO THIRTY O'CLOCK IN THE AFTERNOON
                             </p>
 
                             {/* Location */}
