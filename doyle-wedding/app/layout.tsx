@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
+      <meta name="viewport" content="viewport-fit=cover" />
       <body className="bg-wedding-almond font-sans text-wedding-scarlet">
         {children}
       </body>

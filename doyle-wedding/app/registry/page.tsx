@@ -23,7 +23,7 @@ export default function Registry() {
             <div className="absolute inset-8 border-[2px] border-[#EFD4C4] pointer-events-none z-10" />
 
             {/* Main Content Container - Massive top and bottom padding to fix the squishing */}
-            <div className="relative flex flex-col items-center text-center w-full px-12 pt-32 pb-24 z-20">
+            <div className="relative flex flex-col items-center text-center px-12 pt-32 pb-24 z-20">
                 
                 {/* Header */}
                 <h1 className={`${serifFont.className} text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.1em] text-[#EFD4C4] mb-6 uppercase`}>
@@ -42,7 +42,7 @@ export default function Registry() {
 
                 {/* --- THE STACKED LIST DESIGN --- */}
                 {/* This forces the links to stretch the full width of the container with borders between them */}
-                <div className="w-full mt-4 flex flex-col">
+                <div className="mt-4 flex flex-col">
                     <a 
                         href="https://www.dillards.com/registry/JuanitaDiaz-AlexanderDoyle/133888560?cm_mmc=TransactionEmail-_-WeddingRegistryShare-_-Body-_-ViewWeddingRegistry" 
                         target="_blank" 

@@ -257,6 +257,12 @@ export default function Home() {
                             >
                                 Registry
                             </a>
+                            <a 
+                                href="/dress-code"
+                                className={`${serifFont.className} px-12 py-5 border border-[#EFD4C4] text-[#EFD4C4] text-lg md:text-xl tracking-[0.25em] hover:bg-[#EFD4C4] hover:text-[#781727] transition-all duration-300 uppercase`}
+                            >
+                                Dress Code
+                            </a>
                         </motion.div>
                         
                         {/* --- 3. THE ICHTHYS (FISH) --- */}
