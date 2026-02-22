@@ -194,7 +194,7 @@ export default function Home() {
                             transition={{ delay: 1.6 }}
                             className={`${serifFont.className} text-xs md:text-lg tracking-[0.25em] uppercase text-[#AC5B67] mb-16`}
                         >
-                            Request the pleasure of your company
+                            Invite you to witness the fulfillment of the covenant of marriage
                         </motion.div>
 
                         {/* Divider */}
